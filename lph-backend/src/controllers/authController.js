@@ -34,14 +34,34 @@ export const login = async (req, res) => {
     }
 
     // 3. Obtener el rol del perfil
-    const { data: profile, error: profileError } = await supabase
+    let { data: profile, error: profileError } = await supabase
         .from('profiles')
         .select('*, roles(name)')
         .eq('id', authData.user.id)
         .single();
 
+    // Si el perfil no existe, crearlo por defecto para evitar bloqueos
     if (profileError || !profile) {
-        return res.status(401).json({ error: 'Perfil de usuario no encontrado' });
+        console.log('Perfil no encontrado, creando uno por defecto...');
+        const { data: roleData } = await supabase.from('roles').select('id').eq('name', 'resident').single();
+        
+        const { data: newProfile, error: createError } = await supabase
+            .from('profiles')
+            .insert([{
+                id: authData.user.id,
+                email: authData.user.email,
+                full_name: authData.user.email.split('@')[0],
+                role_id: roleData?.id,
+                status: 'active'
+            }])
+            .select('*, roles(name)')
+            .single();
+
+        if (createError) {
+            console.error('Error al crear perfil:', createError);
+            return res.status(500).json({ error: 'Error al sincronizar perfil de usuario' });
+        }
+        profile = newProfile;
     }
 
     const role = profile.roles?.name || 'resident';
