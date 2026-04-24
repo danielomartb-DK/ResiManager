@@ -38,6 +38,10 @@ export default function Layout() {
         <div className="blob blob-2" />
         <div className="blob blob-3" />
         <div className="blob blob-4" />
+        <div className="blob blob-5" />
+        <div className="blob blob-6" />
+        <div className="blob blob-7" />
+        <div className="blob blob-8" />
       </div>
 
       {/* Mobile Top Bar */}
@@ -73,7 +77,7 @@ export default function Layout() {
             </div>
             <span className="text-xl font-bold text-white tracking-tight">ResiManager</span>
           </div>
-          <div className="text-[10px] text-white/30 tracking-[0.2em] uppercase ml-1">LPH Cloud Suite</div>
+          <div className="text-[12px] text-white/40 tracking-[0.2em] uppercase ml-1">LPH Cloud Suite</div>
         </div>
 
         {/* Nav Links */}
@@ -87,7 +91,7 @@ export default function Layout() {
                 `sidebar-item ${isActive ? 'active' : ''}`
               }
             >
-              <Icon size={18} />
+              <Icon />
               <span>{label}</span>
             </NavLink>
           ))}
@@ -101,7 +105,7 @@ export default function Layout() {
             </div>
             <div>
               <div className="text-white text-sm font-medium truncate max-w-[110px]">{profile?.full_name || 'Usuario'}</div>
-              <div className="text-[10px] text-white/40 uppercase tracking-tighter">{role || 'invitado'}</div>
+              <div className="text-[12px] text-white/40 uppercase tracking-tighter">{role || 'invitado'}</div>
             </div>
           </div>
           <button onClick={handleSignOut} className="sidebar-item w-full text-red-400 hover:bg-red-500/10">

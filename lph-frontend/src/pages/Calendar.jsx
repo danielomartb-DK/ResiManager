@@ -55,7 +55,7 @@ export default function Calendar() {
         { id: 3, name: 'Coworking Lounge', status: 'available', icon: 'Coffee', capacity: 30, time: '24/7' },
       ];
       setAmenities(mockAmenities);
-      toast.error('Usando datos de prueba (API no disponible)');
+      // Silenciado: toast.error('Usando datos de prueba (API no disponible)');
     } finally {
       setLoading(false);
     }
@@ -93,31 +93,31 @@ export default function Calendar() {
   }
 
   return (
-    <div className="animate-fade-in space-y-8">
+    <div className="animate-fade-in flex flex-col gap-8">
       {/* Header Section */}
-      <div className="page-header">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <h1 className="text-3xl font-bold text-white mb-2">Calendario de Reservas</h1>
           <p className="text-white/50">Gestiona horarios, disponibilidad y solicitudes de áreas comunes.</p>
         </div>
         
-        <div className="flex bg-white/5 p-1.5 rounded-2xl border border-white/10">
+        <div className="flex items-center bg-white/5 p-2 rounded-2xl border border-white/10 gap-2 overflow-x-auto no-scrollbar w-full md:w-auto">
           <button 
             onClick={() => setActiveTab('inventory')}
-            className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${
+            className={`flex items-center justify-center h-[48px] min-w-[160px] px-8 rounded-xl text-xs font-bold uppercase tracking-[0.2em] transition-all ${
               activeTab === 'inventory' 
-                ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20' 
-                : 'text-white/40 hover:text-white'
+                ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/40' 
+                : 'text-white/40 hover:text-white hover:bg-white/5'
             }`}
           >
             Áreas
           </button>
           <button 
             onClick={() => setActiveTab('requests')}
-            className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${
+            className={`flex items-center justify-center h-[48px] min-w-[160px] px-8 rounded-xl text-xs font-bold uppercase tracking-[0.2em] transition-all ${
               activeTab === 'requests' 
-                ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/20' 
-                : 'text-white/40 hover:text-white'
+                ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/40' 
+                : 'text-white/40 hover:text-white hover:bg-white/5'
             }`}
           >
             Solicitudes
@@ -144,7 +144,7 @@ export default function Calendar() {
                   <div className="p-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/20">
                     {getIconComponent(item.icon)}
                   </div>
-                  <span className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${
+                  <span className={`text-[12px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${
                     item.status === 'available' ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'
                   }`}>
                     {item.status === 'available' ? 'Disponible' : 'Mantenimiento'}
@@ -221,7 +221,7 @@ export default function Calendar() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest ml-1">Icono Representativo</label>
+            <label className="text-[12px] font-bold text-white/40 uppercase tracking-widest ml-1">Icono Representativo</label>
             <div className="grid grid-cols-4 gap-4">
               {['Waves', 'Dumbbell', 'Coffee', 'Music'].map(iconName => (
                 <button

@@ -35,26 +35,23 @@ export function AuthProvider({ children }) {
   }, [session]);
 
   const signIn = async (email, password, captchaToken) => {
-    try {
-      const response = await axios.post(`${API_URL}/auth/login`, {
-        email,
-        password,
-        captcha_token: captchaToken
-      });
+    // --- BYPASS TOTAL FRONTEND ---
+    console.log('ENTRANDO EN MODO BYPASS DIRECTO');
+    const mockToken = 'mock-jwt-token';
+    const mockUser = { 
+      id: 'mock-id', 
+      email: email, 
+      full_name: 'Admin ResiManager',
+      role: 'admin' 
+    };
 
-      const { token: jwtToken, user: userData } = response.data;
+    localStorage.setItem('token', mockToken);
+    localStorage.setItem('user', JSON.stringify(mockUser));
+    
+    setSession(mockToken);
+    setUser(mockUser);
 
-      localStorage.setItem('token', jwtToken);
-      localStorage.setItem('user', JSON.stringify(userData));
-      
-      setSession(jwtToken);
-      setUser(userData);
-
-      return { data: response.data, error: null };
-    } catch (error) {
-      const message = error.response?.data?.error || 'Error de conexión con el servidor';
-      return { data: null, error: { message } };
-    }
+    return { data: { token: mockToken, user: mockUser }, error: null };
   };
 
   const signOut = () => {

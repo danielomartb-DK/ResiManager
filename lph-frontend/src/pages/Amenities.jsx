@@ -96,7 +96,7 @@ export default function Amenities() {
                   <div className="p-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/20">
                     <item.icon className="w-6 h-6 text-cyan-400" />
                   </div>
-                  <span className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${
+                  <span className={`text-[12px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${
                     item.status === 'available' ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'
                   }`}>
                     {item.status === 'available' ? 'Disponible' : 'Mantenimiento'}

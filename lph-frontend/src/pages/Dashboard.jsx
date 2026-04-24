@@ -71,7 +71,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in flex flex-col gap-8">
       {/* Header */}
       <div className="page-header">
         <div>
@@ -108,11 +108,11 @@ export default function Dashboard() {
               <div className="p-3 rounded-xl" style={{ backgroundColor: `${card.color}15` }}>
                 <card.icon className="w-6 h-6" style={{ color: card.color }} />
               </div>
-              <span className="text-[10px] font-bold text-white/40 bg-white/5 px-2 py-1 rounded-md uppercase">
+              <span className="text-[12px] font-bold text-white/40 bg-white/5 px-3 py-1 rounded-md uppercase tracking-wider">
                 {card.trend}
               </span>
             </div>
-            <p className="text-white/50 text-[11px] font-bold uppercase tracking-[0.2em] mb-2">{card.label}</p>
+            <p className="text-white/50 text-[12px] font-bold uppercase tracking-[0.2em] mb-2">{card.label}</p>
             <h3 className="text-4xl font-bold text-white tracking-tight">{card.value}</h3>
           </motion.div>
         ))}
@@ -163,11 +163,11 @@ export default function Dashboard() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-bold text-white truncate">{act.profiles?.full_name}</p>
-                  <p className="text-[10px] text-white/40 uppercase font-medium">{act.payment_method}</p>
+                  <p className="text-[12px] text-white/40 uppercase font-medium">{act.payment_method}</p>
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-bold text-green-400">+${act.amount}</p>
-                  <p className="text-[10px] text-white/20">{new Date(act.payment_date).toLocaleDateString()}</p>
+                  <p className="text-[12px] text-white/20">{new Date(act.payment_date).toLocaleDateString()}</p>
                 </div>
               </div>
             )) : (
@@ -176,7 +176,7 @@ export default function Dashboard() {
               </div>
             )}
           </div>
-          <button className="w-full mt-10 glass-button-secondary py-3 text-[10px] uppercase tracking-widest">
+          <button className="w-full mt-10 glass-button-secondary py-3 text-[12px] uppercase tracking-widest">
             Ver Historial Completo
             <ChevronRight className="w-4 h-4" />
           </button>
@@ -203,7 +203,7 @@ export default function Dashboard() {
               
               <form onSubmit={handleGenerateFees} className="space-y-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest ml-1">Monto Total a Distribuir</label>
+                  <label className="text-[12px] font-bold text-white/40 uppercase tracking-widest ml-1">Monto Total a Distribuir</label>
                   <input 
                     type="number" required
                     className="glass-input"
@@ -213,7 +213,7 @@ export default function Dashboard() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest ml-1">Descripción del Cobro</label>
+                  <label className="text-[12px] font-bold text-white/40 uppercase tracking-widest ml-1">Descripción del Cobro</label>
                   <input 
                     type="text" required
                     className="glass-input"
@@ -223,7 +223,7 @@ export default function Dashboard() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest ml-1">Fecha de Vencimiento</label>
+                  <label className="text-[12px] font-bold text-white/40 uppercase tracking-widest ml-1">Fecha de Vencimiento</label>
                   <input 
                     type="date" required
                     className="glass-input"
@@ -232,20 +232,20 @@ export default function Dashboard() {
                   />
                 </div>
 
-                <div className="flex gap-4 pt-6">
+                <div className="grid-actions pt-6">
                   <button 
                     type="button"
                     onClick={() => setShowModal(false)}
-                    className="flex-1 glass-button-secondary py-4"
+                    className="glass-button-secondary py-4"
                   >
                     Cancelar
                   </button>
                   <button 
                     type="submit"
                     disabled={generating}
-                    className="flex-1 glass-button py-4"
+                    className="glass-button py-4"
                   >
-                    {generating ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Generar Ahora'}
+                    {generating ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : 'Generar Ahora'}
                   </button>
                 </div>
               </form>

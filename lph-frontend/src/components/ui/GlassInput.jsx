@@ -4,7 +4,7 @@ const GlassInput = forwardRef(({ label, error, className = '', ...props }, ref) 
   return (
     <div className={`space-y-2 ${className}`}>
       {label && (
-        <label className="text-[10px] font-bold text-white/40 uppercase tracking-widest ml-1">
+        <label className="text-[12px] font-bold text-white/40 uppercase tracking-widest ml-1">
           {label}
         </label>
       )}

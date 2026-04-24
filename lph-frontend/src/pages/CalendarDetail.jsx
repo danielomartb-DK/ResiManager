@@ -68,7 +68,7 @@ export default function CalendarDetail() {
                 <div className="p-3 rounded-xl bg-cyan-500/10">
                   <Users className="w-5 h-5 text-cyan-400" />
                 </div>
-                <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Aforo Máximo</p>
+                <p className="text-[12px] font-bold text-white/30 uppercase tracking-widest">Aforo Máximo</p>
               </div>
               <h3 className="text-3xl font-bold text-white">{amenity.capacity} Personas</h3>
             </div>
@@ -77,7 +77,7 @@ export default function CalendarDetail() {
                 <div className="p-3 rounded-xl bg-purple-500/10">
                   <Clock className="w-5 h-5 text-purple-400" />
                 </div>
-                <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Horario de Uso</p>
+                <p className="text-[12px] font-bold text-white/30 uppercase tracking-widest">Horario de Uso</p>
               </div>
               <h3 className="text-3xl font-bold text-white">{amenity.time}</h3>
             </div>
@@ -118,7 +118,7 @@ export default function CalendarDetail() {
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
-                  <div className="flex items-center gap-2 text-[10px] text-white/40 font-bold uppercase">
+                  <div className="flex items-center gap-2 text-[12px] text-white/40 font-bold uppercase">
                     <Clock className="w-3.5 h-3.5" />
                     Hoy, 14:00 - 16:00
                   </div>

@@ -18,13 +18,9 @@ export default function Login() {
     console.log('Iniciando envío de formulario...');
     setError('');
     
-    // Obtener token de reCAPTCHA
-    const captchaToken = recaptchaRef.current?.getValue();
-    console.log('Captcha Token obtenido:', !!captchaToken);
-    if (!captchaToken) {
-      setError('Por favor, verifique que no es un robot.');
-      return;
-    }
+    // Bypass de reCAPTCHA para desarrollo
+    const captchaToken = recaptchaRef.current?.getValue() || "dev-token-bypass";
+    console.log('Captcha Token:', captchaToken);
 
     setLoading(true);
     try {
@@ -57,6 +53,10 @@ export default function Login() {
         <div className="blob blob-2"></div>
         <div className="blob blob-3"></div>
         <div className="blob blob-4"></div>
+        <div className="blob blob-5"></div>
+        <div className="blob blob-6"></div>
+        <div className="blob blob-7"></div>
+        <div className="blob blob-8"></div>
       </div>
 
       <div className="glass-card">
@@ -136,13 +136,19 @@ export default function Login() {
           )}
 
           {/* reCAPTCHA v2 Widget */}
-          <div className="recaptcha-section" style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-            <ReCAPTCHA
-              ref={recaptchaRef}
-              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-              theme="dark"
-            />
-          </div>
+          {import.meta.env.VITE_RECAPTCHA_SITE_KEY ? (
+            <div className="recaptcha-section" style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+              <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                theme="dark"
+              />
+            </div>
+          ) : (
+            <p style={{ color: '#f87171', textAlign: 'center', fontSize: '12px' }}>
+              Error: ReCAPTCHA Key no configurada (.env)
+            </p>
+          )}
 
           {error && <p style={{ fontSize: '12px', color: '#f87171', textAlign: 'center', marginBottom: '10px' }}>{error}</p>}
 

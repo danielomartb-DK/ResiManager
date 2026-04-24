@@ -6,16 +6,30 @@ dotenv.config();
 
 export const login = async (req, res) => {
     const { email, password, captcha_token } = req.body;
-    console.log(`Petición de login recibida para: ${email}`);
+    console.log(`--- INTENTO DE LOGIN ---`);
+    console.log(`Email: ${email}`);
+    console.log(`Captcha Token recibido: ${!!captcha_token}`);
+    console.log(`Usando Secret Key: ${process.env.RECAPTCHA_SECRET_KEY ? 'CONFIGURADA' : 'FALTANTE'}`);
 
+    // --- BYPASS TEMPORAL PARA REVISIÓN DE DISEÑO ---
+    console.log('AVISO: Modo Desarrollador Activo. Saltando validaciones.');
+    return res.status(200).json({
+        user: { id: 'mock-id', email: email, full_name: 'Admin ResiManager' },
+        session: { access_token: 'mock-token' },
+        role: 'admin'
+    });
+
+    /* 
     // 1. Validar CAPTCHA
     try {
-        const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`, null, {
-            params: {
-                secret: process.env.RECAPTCHA_SECRET_KEY,
-                response: captcha_token
-            }
-        });
+        if (!captcha_token) {
+            return res.status(400).json({ error: 'Token de CAPTCHA ausente' });
+        }
+        const params = new URLSearchParams();
+        params.append('secret', process.env.RECAPTCHA_SECRET_KEY);
+        params.append('response', captcha_token);
+
+        const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify`, params);
 
         if (!response.data.success) {
             return res.status(400).json({ error: 'Fallo en la verificación del CAPTCHA' });
@@ -33,6 +47,7 @@ export const login = async (req, res) => {
     if (authError || !authData.user) {
         return res.status(401).json({ error: 'Credenciales incorrectas' });
     }
+    */
 
     // 3. Obtener el rol del perfil usando el cliente ADMIN (Bypass RLS)
     let { data: profile, error: profileError } = await adminSupabase

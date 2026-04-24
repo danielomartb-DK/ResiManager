@@ -45,7 +45,7 @@ export default function Security() {
               <div className="p-3 rounded-2xl bg-white/5 border border-white/10">
                 <feature.icon className="w-6 h-6" style={{ color: feature.color }} />
               </div>
-              <span className="text-[10px] font-bold px-2 py-1 rounded bg-white/5 text-white/40 uppercase tracking-widest">
+              <span className="text-[12px] font-bold px-2 py-1 rounded bg-white/5 text-white/40 uppercase tracking-widest">
                 {feature.status}
               </span>
             </div>
@@ -68,7 +68,7 @@ export default function Security() {
               <Eye className="w-5 h-5 text-blue-400" />
               Últimos Eventos
             </h2>
-            <button className="text-[10px] font-bold text-blue-400 uppercase tracking-widest hover:underline">Ver Todo</button>
+            <button className="text-[12px] font-bold text-blue-400 uppercase tracking-widest hover:underline">Ver Todo</button>
           </div>
           <div className="space-y-6">
             {[1, 2, 3].map((_, i) => (
@@ -76,7 +76,7 @@ export default function Security() {
                 <div className="w-2 h-2 rounded-full bg-green-500 shadow-lg shadow-green-500/20"></div>
                 <div className="flex-1">
                   <p className="text-sm font-bold text-white">Ingreso Peatonal - Torre A</p>
-                  <p className="text-[10px] text-white/40 uppercase">HACE 5 MINUTOS</p>
+                  <p className="text-[12px] text-white/40 uppercase">HACE 5 MINUTOS</p>
                 </div>
                 <button className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all">
                   <ChevronRight className="w-4 h-4" />
@@ -93,11 +93,11 @@ export default function Security() {
               Zonas Restringidas
             </h2>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {['Cuarto de Máquinas', 'Azotea', 'Parqueadero Admin', 'Bodega General'].map((zone, i) => (
-              <div key={i} className="p-6 rounded-2xl bg-white/5 border border-white/5 text-center">
+              <div key={i} className="p-6 rounded-2xl bg-white/5 border border-white/10 text-center hover:bg-white/[0.08] transition-all">
                 <p className="text-sm font-bold text-white mb-1">{zone}</p>
-                <p className="text-[10px] text-green-400 font-bold uppercase">Asegurado</p>
+                <p className="text-[12px] text-green-400 font-bold uppercase tracking-widest">Asegurado</p>
               </div>
             ))}
           </div>
