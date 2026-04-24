@@ -58,8 +58,8 @@ export const login = async (req, res) => {
             .single();
 
         if (createError) {
-            console.error('Error al crear perfil:', createError);
-            return res.status(500).json({ error: 'Error al sincronizar perfil de usuario' });
+            console.error('ERROR DETALLADO DE SUPABASE:', JSON.stringify(createError, null, 2));
+            return res.status(500).json({ error: `Error al sincronizar perfil: ${createError.message || 'Error desconocido'}` });
         }
         profile = newProfile;
     }
