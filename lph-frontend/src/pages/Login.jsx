@@ -134,7 +134,7 @@ export default function Login() {
           <div className="recaptcha-section" style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
             <ReCAPTCHA
               ref={recaptchaRef}
-              sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" // Site Key de prueba (funciona en localhost)
+              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
               theme="dark"
             />
           </div>
