@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import { supabase } from '../config/supabase.js';
+import { supabase, adminSupabase } from '../config/supabase.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -33,8 +33,8 @@ export const login = async (req, res) => {
         return res.status(401).json({ error: 'Credenciales incorrectas' });
     }
 
-    // 3. Obtener el rol del perfil
-    let { data: profile, error: profileError } = await supabase
+    // 3. Obtener el rol del perfil usando el cliente ADMIN (Bypass RLS)
+    let { data: profile, error: profileError } = await adminSupabase
         .from('profiles')
         .select('*, roles(name)')
         .eq('id', authData.user.id)
@@ -43,9 +43,9 @@ export const login = async (req, res) => {
     // Si el perfil no existe, crearlo por defecto para evitar bloqueos
     if (profileError || !profile) {
         console.log('Perfil no encontrado, creando uno por defecto...');
-        const { data: roleData } = await supabase.from('roles').select('id').eq('name', 'resident').single();
+        const { data: roleData } = await adminSupabase.from('roles').select('id').eq('name', 'resident').single();
         
-        const { data: newProfile, error: createError } = await supabase
+        const { data: newProfile, error: createError } = await adminSupabase
             .from('profiles')
             .insert([{
                 id: authData.user.id,

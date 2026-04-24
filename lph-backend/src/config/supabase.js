@@ -3,7 +3,18 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const supabaseUrl = process.env.SUPABASE_URL;
-// Usamos Service Role Key en el backend para bypass de RLS en tareas administrativas
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+// Cliente para operaciones públicas / autenticación de usuarios
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// Cliente para operaciones administrativas (Bypass RLS)
+export const adminSupabase = createClient(supabaseUrl, supabaseServiceKey || supabaseAnonKey, {
+    auth: {
+        autoRefreshToken: false,
+        persistSession: false
+    }
+});
+
+console.log('CONEXIÓN: Clientes Supabase inicializados (Auth y Admin)');
