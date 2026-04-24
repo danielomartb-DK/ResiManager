@@ -5,6 +5,8 @@ import financeRoutes from './routes/financeRoutes.js';
 import pqrsRoutes from './routes/pqrsRoutes.js';
 import bookingRoutes from './routes/bookingRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
+import unitRoutes from './routes/unitRoutes.js';
 
 dotenv.config();
 
@@ -16,6 +18,8 @@ app.use(express.json());
 
 // Rutas
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/units', unitRoutes);
 app.use('/api/finance', financeRoutes);
 app.use('/api/pqrs', pqrsRoutes);
 app.use('/api/bookings', bookingRoutes);

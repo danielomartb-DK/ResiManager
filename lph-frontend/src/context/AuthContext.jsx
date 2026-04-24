@@ -1,10 +1,19 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
 import axios from 'axios';
 
 const AuthContext = createContext(null);
-
 const API_URL = import.meta.env.VITE_API_URL;
+
+// Configuración global de Axios para incluir el token automáticamente
+axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -12,10 +21,15 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Si hay un token, podríamos validar su vigencia aquí o simplemente cargar el usuario del localStorage
     const savedUser = localStorage.getItem('user');
     if (session && savedUser) {
-      setUser(JSON.parse(savedUser));
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        setSession(null);
+      }
     }
     setLoading(false);
   }, [session]);
@@ -38,25 +52,9 @@ export function AuthProvider({ children }) {
 
       return { data: response.data, error: null };
     } catch (error) {
-      const message = error.response?.data?.error || 'Error de conexión';
+      const message = error.response?.data?.error || 'Error de conexión con el servidor';
       return { data: null, error: { message } };
     }
-  };
-
-  const signUp = async (email, password, fullName) => {
-    // Mantenemos el registro directo con Supabase por ahora como flujo alterno
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (!error && data.user) {
-      const { data: roleData } = await supabase.from('roles').select('id').eq('name', 'resident').single();
-      await supabase.from('profiles').insert([{
-        id: data.user.id,
-        full_name: fullName,
-        email,
-        role_id: roleData?.id,
-        status: 'active'
-      }]);
-    }
-    return { data, error };
   };
 
   const signOut = () => {
@@ -66,10 +64,12 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
+  // Alias 'profile' para compatibilidad con Layout.jsx
+  const profile = user;
   const role = user?.role || null;
 
   return (
-    <AuthContext.Provider value={{ user, session, role, loading, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ user, profile, session, role, loading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

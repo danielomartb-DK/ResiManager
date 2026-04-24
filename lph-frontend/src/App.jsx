@@ -5,11 +5,13 @@ import Dashboard from './pages/Dashboard';
 import Units from './pages/Units';
 import Finance from './pages/Finance';
 import PQRS from './pages/PQRS';
-import Amenities from './pages/Amenities';
+import Calendar from './pages/Calendar';
+import CalendarDetail from './pages/CalendarDetail';
 import Security from './pages/Security';
 import Users from './pages/Users';
 import Settings from './pages/Settings';
 import Layout from './components/Layout';
+import ToastProvider from './components/ui/ToastProvider';
 
 function ProtectedRoute({ children, allowedRoles }) {
   const { session, role, loading } = useAuth();
@@ -30,7 +32,8 @@ function AppRoutes() {
         <Route path="/units" element={<ProtectedRoute allowedRoles={['admin','staff']}><Units /></ProtectedRoute>} />
         <Route path="/finance" element={<ProtectedRoute allowedRoles={['admin','staff']}><Finance /></ProtectedRoute>} />
         <Route path="/pqrs" element={<ProtectedRoute><PQRS /></ProtectedRoute>} />
-        <Route path="/amenities" element={<ProtectedRoute><Amenities /></ProtectedRoute>} />
+        <Route path="/calendar" element={<ProtectedRoute><Calendar /></ProtectedRoute>} />
+        <Route path="/calendar/:id" element={<ProtectedRoute><CalendarDetail /></ProtectedRoute>} />
         <Route path="/security" element={<ProtectedRoute allowedRoles={['admin','security']}><Security /></ProtectedRoute>} />
         <Route path="/users" element={<ProtectedRoute allowedRoles={['admin']}><Users /></ProtectedRoute>} />
         <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
@@ -43,6 +46,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <ToastProvider />
         <AppRoutes />
       </AuthProvider>
     </BrowserRouter>

@@ -57,3 +57,27 @@ export const getBookings = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+export const updateBookingStatus = async (req, res) => {
+    try {
+        if (req.user.role !== 'admin' && req.user.role !== 'staff') {
+            return res.status(403).json({ error: 'Not authorized to update booking status.' });
+        }
+
+        const { id } = req.params;
+        const { status } = req.body;
+
+        const { data, error } = await supabase
+            .from('bookings')
+            .update({ status })
+            .eq('id', id)
+            .select()
+            .single();
+
+        if (error) throw error;
+        res.json({ message: 'Booking status updated', data });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+

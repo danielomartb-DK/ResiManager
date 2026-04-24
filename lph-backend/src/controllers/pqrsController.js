@@ -1,18 +1,14 @@
-import { supabase } from '../config/supabase.js';
+import { adminSupabase } from '../config/supabase.js';
 
 export const createTicket = async (req, res) => {
     try {
-        if (req.user.role !== 'resident') {
-            return res.status(403).json({ error: 'Only residents can create tickets.' });
-        }
-
         const { title, description, priority, category, unit_id } = req.body;
 
         if (!title || !description || !category || !unit_id) {
-            return res.status(400).json({ error: 'Missing required fields' });
+            return res.status(400).json({ error: 'Faltan campos obligatorios' });
         }
 
-        const { data, error } = await supabase
+        const { data, error } = await adminSupabase
             .from('tickets')
             .insert([{
                 title,
@@ -28,14 +24,13 @@ export const createTicket = async (req, res) => {
 
         if (error) throw error;
 
-        // Auto-create initial timeline event
-        await supabase.from('ticket_timeline').insert([{
+        await adminSupabase.from('ticket_timeline').insert([{
             ticket_id: data.id,
-            action: 'Ticket Created',
+            action: 'Ticket Creado',
             actor_id: req.user.id
         }]);
 
-        res.status(201).json({ message: 'Ticket created successfully', data });
+        res.status(201).json({ message: 'Ticket creado exitosamente', data });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -43,9 +38,8 @@ export const createTicket = async (req, res) => {
 
 export const getTickets = async (req, res) => {
     try {
-        let query = supabase.from('tickets').select('*, profiles(full_name), units(unit_number)');
+        let query = adminSupabase.from('tickets').select('*, profiles(full_name), units(unit_number)');
 
-        // Admin/Staff/Security see all, Resident sees only theirs
         if (req.user.role === 'resident') {
             query = query.eq('reporter_id', req.user.id);
         }
@@ -55,20 +49,20 @@ export const getTickets = async (req, res) => {
         if (error) throw error;
         res.json({ data });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Error al obtener tickets' });
     }
 };
 
 export const updateTicketStatus = async (req, res) => {
     try {
         if (req.user.role !== 'admin' && req.user.role !== 'staff') {
-            return res.status(403).json({ error: 'Not authorized to update ticket status.' });
+            return res.status(403).json({ error: 'No autorizado para actualizar estados de tickets.' });
         }
 
         const { id } = req.params;
         const { status } = req.body;
 
-        const { data, error } = await supabase
+        const { data, error } = await adminSupabase
             .from('tickets')
             .update({ status })
             .eq('id', id)
@@ -77,14 +71,14 @@ export const updateTicketStatus = async (req, res) => {
 
         if (error) throw error;
 
-        await supabase.from('ticket_timeline').insert([{
+        await adminSupabase.from('ticket_timeline').insert([{
             ticket_id: id,
-            action: `Status changed to ${status}`,
+            action: `Estado cambiado a ${status}`,
             actor_id: req.user.id
         }]);
 
-        res.json({ message: 'Ticket status updated', data });
+        res.json({ message: 'Estado de ticket actualizado', data });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: 'Error al actualizar ticket' });
     }
 };
