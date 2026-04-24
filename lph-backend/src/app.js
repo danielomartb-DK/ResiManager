@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import financeRoutes from './routes/financeRoutes.js';
 import pqrsRoutes from './routes/pqrsRoutes.js';
 import bookingRoutes from './routes/bookingRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 dotenv.config();
 
@@ -13,7 +14,8 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// Rutas
+app.use('/api/auth', authRoutes);
 app.use('/api/finance', financeRoutes);
 app.use('/api/pqrs', pqrsRoutes);
 app.use('/api/bookings', bookingRoutes);

@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 export default function Login() {
   const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
+  const recaptchaRef = useRef();
+  
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -13,12 +16,24 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    
+    // Obtener token de reCAPTCHA
+    const captchaToken = recaptchaRef.current.getValue();
+    if (!captchaToken) {
+      setError('Por favor, verifique que no es un robot.');
+      return;
+    }
+
     setLoading(true);
     try {
       if (isLogin) {
-        const { error } = await signIn(form.email, form.password);
-        if (error) setError('Credenciales inválidas. Por favor intente de nuevo.');
-        else navigate('/dashboard');
+        const { error } = await signIn(form.email, form.password, captchaToken);
+        if (error) {
+          setError(error.message);
+          recaptchaRef.current.reset(); // Reset captcha on failure
+        } else {
+          navigate('/dashboard');
+        }
       } else {
         if (!form.fullName) { setError('El nombre completo es obligatorio'); setLoading(false); return; }
         const { error } = await signUp(form.email, form.password, form.fullName);
@@ -32,7 +47,6 @@ export default function Login() {
 
   return (
     <div className="login-container">
-      {/* Background blobs are handled in the global CSS through Layout but for Login we add them directly if needed or use the global ones */}
       <div className="liquid-background">
         <div className="blob blob-1"></div>
         <div className="blob blob-2"></div>
@@ -41,10 +55,8 @@ export default function Login() {
       </div>
 
       <div className="glass-card">
-        {/* Lens Flares */}
         <div className="flare flare-title"></div>
 
-        {/* Logo */}
         <div className="logo-container">
           <div className="logo">
             <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -56,13 +68,11 @@ export default function Login() {
           </div>
         </div>
 
-        {/* Header */}
         <div className="header">
           <h1>{isLogin ? 'BIENVENIDO' : 'REGISTRO'}</h1>
           <p>{isLogin ? 'Inicie sesión para acceder a su\npanel personal' : 'Cree una cuenta para gestionar su\ncondominio'}</p>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit}>
           {!isLogin && (
             <div className="form-group">
@@ -120,24 +130,13 @@ export default function Login() {
             </div>
           )}
 
-          {/* ReCAPTCHA Simulated */}
-          <div className="recaptcha-section">
-            <div className="recaptcha-label">RECAPTCHA</div>
-            <div className="recaptcha-box">
-              <div className="flare flare-recaptcha"></div>
-              <div className="recaptcha-left">
-                <div className="recaptcha-checkbox"></div>
-                <span className="recaptcha-text">No soy un robot</span>
-              </div>
-              <div className="recaptcha-badge">
-                <div className="badge-icon-circle">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 13l4 4L19 7"/>
-                  </svg>
-                </div>
-                <span className="badge-text">Verificado</span>
-              </div>
-            </div>
+          {/* reCAPTCHA v2 Widget */}
+          <div className="recaptcha-section" style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" // Site Key de prueba (funciona en localhost)
+              theme="dark"
+            />
           </div>
 
           {error && <p style={{ fontSize: '12px', color: '#f87171', textAlign: 'center', marginBottom: '10px' }}>{error}</p>}
@@ -148,7 +147,6 @@ export default function Login() {
           </button>
         </form>
 
-        {/* Toggle Sign Up/Login */}
         <p className="signup-text">
           {isLogin ? '¿No tiene una cuenta? ' : '¿Ya tiene una cuenta? '}
           <a href="#" onClick={(e) => { e.preventDefault(); setIsLogin(!isLogin); setError(''); }}>

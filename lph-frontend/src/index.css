@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
+
 * {
   margin: 0;
   padding: 0;
@@ -35,14 +36,14 @@ body {
 
 .blob-1 {
   width: 600px; height: 600px;
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); /* Deep Navy */
   top: -20%; left: -10%;
   animation-duration: 18s;
 }
 
 .blob-2 {
   width: 800px; height: 800px;
-  background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+  background: linear-gradient(135deg, #1e3a8a 0%, #172554 100%); /* Dark Blue to Navy */
   bottom: -30%; right: -20%;
   animation-duration: 22s;
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
@@ -50,7 +51,7 @@ body {
 
 .blob-3 {
   width: 500px; height: 500px;
-  background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
+  background: linear-gradient(135deg, #111827 0%, #1e293b 100%); /* Slate Deep Dark */
   top: 40%; left: 30%;
   animation-duration: 15s;
   border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
@@ -58,7 +59,7 @@ body {
 
 .blob-4 {
   width: 400px; height: 400px;
-  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); /* Royal to Deep Blue */
   top: 10%; right: 20%;
   animation-duration: 12s;
   border-radius: 50%;
