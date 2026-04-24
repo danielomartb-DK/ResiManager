@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Login to access your personal dashboard">
+  <title>Login - Liquid Glass</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============ LIQUID BACKGROUND ============ -->
+  <div class="liquid-background">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
+    <div class="blob blob-5"></div>
+    <div class="blob blob-6"></div>
+  </div>
+
+  <!-- ============ LOGIN CARD ============ -->
+  <div class="login-container">
+    <div class="glass-card">
+
+      <!-- Lens Flares (Sun Reflections) -->
+      <div class="flare flare-top-right"></div>
+      <div class="flare flare-title"></div>
+
+      <!-- Logo -->
+      <div class="logo-container">
+        <div class="logo">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Stylized "A" logo -->
+            <path d="M30 8L10 50H18L22 40H38L42 50H50L30 8Z" 
+                  fill="rgba(255,255,255,0.4)" 
+                  stroke="rgba(255,255,255,0.8)" 
+                  stroke-width="1.5"/>
+            <path d="M30 18L24 34H36L30 18Z" 
+                  fill="rgba(255,255,255,0.5)"/>
+            <!-- Small accent line -->
+            <line x1="42" y1="12" x2="46" y2="8" 
+                  stroke="rgba(255,255,255,0.9)" 
+                  stroke-width="1.5" 
+                  stroke-linecap="round"/>
+            <circle cx="47" cy="7" r="1.5" fill="rgba(255,255,255,0.9)"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Header -->
+      <div class="header">
+        <h1>WELCOME</h1>
+        <p>Login to access your<br>personal dashboard</p>
+      </div>
+
+      <!-- Form -->
+      <form id="loginForm" onsubmit="return false;">
+
+        <!-- Username -->
+        <div class="form-group">
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <input type="text" id="username" placeholder="Username or Email" autocomplete="username">
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <div class="input-wrapper">
+            <div class="flare flare-input"></div>
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <input type="password" id="password" placeholder="••••••" value="123456" autocomplete="current-password">
+          </div>
+        </div>
+
+        <!-- Forgot Password -->
+        <div class="forgot-password">
+          <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+        </div>
+
+        <!-- ReCAPTCHA -->
+        <div class="recaptcha-section">
+          <div class="recaptcha-label">RECAPTCHA</div>
+          <div class="recaptcha-box">
+            <div class="flare flare-recaptcha"></div>
+            <div class="recaptcha-left">
+              <div class="recaptcha-checkbox" id="recaptchaCheckbox"></div>
+              <span class="recaptcha-text">I'm not a robot</span>
+            </div>
+            <div class="recaptcha-badge">
+              <div class="badge-icon-circle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 13l4 4L19 7"/>
+                </svg>
+              </div>
+              <span class="badge-text">Verified</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Login Button -->
+        <button type="submit" class="login-btn" id="loginButton">
+          <div class="flare flare-btn"></div>
+          LOGIN
+        </button>
+
+      </form>
+
+      <!-- Sign Up -->
+      <p class="signup-text">Don't have an account? <a href="#" id="signupLink">Sign up</a></p>
+
+    </div>
+
+    <!-- Home Indicator Bar -->
+    <div class="home-indicator"></div>
+  </div>
+
+  <!-- Sparkle decoration -->
+  <div class="sparkle">
+    <svg viewBox="0 0 24 24" fill="rgba(220,230,245,0.8)" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 0L14.5 9.5L24 12L14.5 14.5L12 24L9.5 14.5L0 12L9.5 9.5L12 0Z"/>
+    </svg>
+  </div>
+
+</body>
+</html>
