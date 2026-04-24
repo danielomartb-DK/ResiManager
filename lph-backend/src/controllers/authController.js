@@ -6,6 +6,7 @@ dotenv.config();
 
 export const login = async (req, res) => {
     const { email, password, captcha_token } = req.body;
+    console.log(`Petición de login recibida para: ${email}`);
 
     // 1. Validar CAPTCHA
     try {
@@ -73,6 +74,7 @@ export const login = async (req, res) => {
         { expiresIn: '1h' }
     );
 
+    console.log('Login completado con éxito, enviando respuesta...');
     res.json({
         message: 'Login exitoso',
         token,

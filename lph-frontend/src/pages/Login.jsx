@@ -15,10 +15,12 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Iniciando envío de formulario...');
     setError('');
     
     // Obtener token de reCAPTCHA
-    const captchaToken = recaptchaRef.current.getValue();
+    const captchaToken = recaptchaRef.current?.getValue();
+    console.log('Captcha Token obtenido:', !!captchaToken);
     if (!captchaToken) {
       setError('Por favor, verifique que no es un robot.');
       return;
@@ -27,11 +29,14 @@ export default function Login() {
     setLoading(true);
     try {
       if (isLogin) {
+        console.log('Intentando signIn...');
         const { error } = await signIn(form.email, form.password, captchaToken);
+        console.log('Resultado signIn:', error ? 'Error: ' + error.message : 'Éxito');
         if (error) {
           setError(error.message);
-          recaptchaRef.current.reset(); // Reset captcha on failure
+          recaptchaRef.current?.reset();
         } else {
+          console.log('Navegando a dashboard...');
           navigate('/dashboard');
         }
       } else {

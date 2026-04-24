@@ -8,17 +8,17 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [session, setSession] = useState(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Si hay un token, podríamos validar su vigencia aquí o simplemente cargar el usuario del localStorage
     const savedUser = localStorage.getItem('user');
-    if (token && savedUser) {
+    if (session && savedUser) {
       setUser(JSON.parse(savedUser));
     }
     setLoading(false);
-  }, [token]);
+  }, [session]);
 
   const signIn = async (email, password, captchaToken) => {
     try {
@@ -33,7 +33,7 @@ export function AuthProvider({ children }) {
       localStorage.setItem('token', jwtToken);
       localStorage.setItem('user', JSON.stringify(userData));
       
-      setToken(jwtToken);
+      setSession(jwtToken);
       setUser(userData);
 
       return { data: response.data, error: null };
@@ -62,14 +62,14 @@ export function AuthProvider({ children }) {
   const signOut = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    setToken(null);
+    setSession(null);
     setUser(null);
   };
 
   const role = user?.role || null;
 
   return (
-    <AuthContext.Provider value={{ user, token, role, loading, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ user, session, role, loading, signIn, signUp, signOut }}>
       {children}
     </AuthContext.Provider>
   );
