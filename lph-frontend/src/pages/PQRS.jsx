@@ -75,14 +75,14 @@ export default function PQRS() {
         </div>
 
         <div className="flex flex-col md:flex-row items-center gap-6">
-          <div className="flex items-center gap-2 bg-white/5 p-1.5 rounded-2xl border border-white/10">
+          <div className="flex items-center bg-white/5 p-2 rounded-2xl border border-white/10 gap-2 overflow-x-auto no-scrollbar w-full md:w-auto">
             {['all', 'pending', 'resolved'].map((f) => (
               <button
                 key={f}
                 onClick={() => setFilter(f)}
-                className={`px-6 py-2.5 rounded-xl text-[12px] font-bold uppercase tracking-widest transition-all ${
+                className={`flex items-center justify-center h-[48px] min-w-[140px] px-8 rounded-xl text-xs font-bold uppercase tracking-[0.2em] transition-all ${
                   filter === f 
-                    ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-900/40' 
+                    ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/40' 
                     : 'text-white/40 hover:text-white hover:bg-white/5'
                 }`}
               >
