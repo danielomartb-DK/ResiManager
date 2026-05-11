@@ -136,19 +136,13 @@ export default function Login() {
           )}
 
           {/* reCAPTCHA v2 Widget */}
-          {import.meta.env.VITE_RECAPTCHA_SITE_KEY ? (
-            <div className="recaptcha-section" style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-              <ReCAPTCHA
-                ref={recaptchaRef}
-                sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-                theme="dark"
-              />
-            </div>
-          ) : (
-            <p style={{ color: '#f87171', textAlign: 'center', fontSize: '12px' }}>
-              Error: ReCAPTCHA Key no configurada (.env)
-            </p>
-          )}
+          <div className="recaptcha-section" style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey="6Lc8-eQsAAAAAElP8SkrBgVDi_XFgT4QhayQ5KPy"
+              theme="dark"
+            />
+          </div>
 
           {error && <p style={{ fontSize: '12px', color: '#f87171', textAlign: 'center', marginBottom: '10px' }}>{error}</p>}
 
